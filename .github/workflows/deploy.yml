@@ -11,6 +11,7 @@ on:
 #
 # 2. Change these variables for your configuration:
 env:
+  AZURE_RESOURCE_GROUP_NAME: andyc-functions-test-1
   AZURE_FUNCTIONAPP_NAME: andyc-test-1    # set this to your application's name
   AZURE_FUNCTIONAPP_PACKAGE_PATH: './httpexample'      # set this to the path to your web app project, defaults to the repository root
   NODE_VERSION: '12.x'                     # set this to the node version to use (supports 8.x, 10.x, 12.x)
@@ -50,11 +51,18 @@ jobs:
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
+      - name: create slot
+        uses: azure/CLI@v1
+        with:
+          azcliversion: 2.0.72
+          inlineScript: |
+            az functionapp deployment slot create --name ${{ env.AZURE_FUNCTIONAPP_NAME }} --resource-group ${{ env.AZURE_RESOURCE_GROUP_NAME }} --slot ${{ env.BRANCH }}
+
       - name: 'Run Azure Functions Action'
         uses: Azure/functions-action@v1
         id: fa
         with:
           app-name: ${{ env.AZURE_FUNCTIONAPP_NAME }}
-          slot-name: smoke
+          slot-name: ${{ env.BRANCH }}
           package: ${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}
 
