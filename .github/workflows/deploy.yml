@@ -51,12 +51,16 @@ jobs:
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
-      - name: create slot
+      - name: create slot if not exists
         uses: azure/CLI@v1
         with:
           azcliversion: 2.0.72
           inlineScript: |
-            az functionapp deployment slot create --name ${{ env.AZURE_FUNCTIONAPP_NAME }} --resource-group ${{ env.AZURE_RESOURCE_GROUP_NAME }} --slot ${{ env.BRANCH }}
+            az functionapp deployment slot list --name ${{ env.AZURE_FUNCTIONAPP_NAME }} --resource-group ${{ env.AZURE_RESOURCE_GROUP_NAME }} --output table | grep -q '${{ env.BRANCH }}' &> /dev/null
+            if [ $? == 0 ]; then
+              echo "creating slot"
+              az functionapp deployment slot create --name ${{ env.AZURE_FUNCTIONAPP_NAME }} --resource-group ${{ env.AZURE_RESOURCE_GROUP_NAME }} --slot ${{ env.BRANCH }}
+            fi
 
       - name: 'Run Azure Functions Action'
         uses: Azure/functions-action@v1
