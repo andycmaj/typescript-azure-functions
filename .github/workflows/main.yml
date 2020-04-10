@@ -73,15 +73,22 @@ jobs:
               --name ${{ env.AZURE_FUNCTIONAPP_NAME }} --storage-account andycsa --functions-version 3 \
               --runtime node --runtime-version 12 
 
-      - name: 'Run Azure Functions Action'
-        uses: Azure/functions-action@v1
-        id: fa
+      # - name: 'Run Azure Functions Action'
+      #   uses: Azure/functions-action@v1
+      #   id: fa
+      #   with:
+      #     app-name: ${{ env.AZURE_FUNCTIONAPP_NAME }}
+      #     slot-name: candidate
+      #     # package: ${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}
+
+      - uses: montudor/action-zip@v0.1.0
         with:
-          app-name: ${{ env.AZURE_FUNCTIONAPP_NAME }}
-          slot-name: candidate
-          # package: ${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}
+          args: zip -qq -r ./deploy.zip ./
 
       - name: 'print url'
         shell: bash
         run: |
-          echo ${{ steps.fa.outputs.app-url }}
+          az webapp deployment source config-zip \
+            -g ${{ env.AZURE_RESOURCE_GROUP_NAME }} -n ${{ env.AZURE_FUNCTIONAPP_NAME }} \
+            -s candidate \
+            --src ./deploy.zip
