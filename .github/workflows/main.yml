@@ -69,9 +69,7 @@ jobs:
         with:
           azcliversion: 2.0.72
           inlineScript: |
-            az functionapp create --resource-group ${{ env.AZURE_RESOURCE_GROUP_NAME }} --consumption-plan westus \
-              --name ${{ env.AZURE_FUNCTIONAPP_NAME }} --storage-account andycsa --functions-version 3 \
-              --runtime node --runtime-version 12 
+            az functionapp create --resource-group ${{ env.AZURE_RESOURCE_GROUP_NAME }} --consumption-plan westus --name ${{ env.AZURE_FUNCTIONAPP_NAME }} --storage-account andycsa --functions-version 3 --runtime node --runtime-version 12 
 
       - name: 'Run Azure Functions Action'
         uses: Azure/functions-action@v1
