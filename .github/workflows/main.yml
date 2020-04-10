@@ -12,7 +12,7 @@ on:
 # 2. Change these variables for your configuration:
 env:
   AZURE_RESOURCE_GROUP_NAME: andyc-rg
-  AZURE_FUNCTIONAPP_PACKAGE_PATH: './httpexample'      # set this to the path to your web app project, defaults to the repository root
+  # AZURE_FUNCTIONAPP_PACKAGE_PATH: './httpexample'      # set this to the path to your web app project, defaults to the repository root
   NODE_VERSION: '12.x'                     # set this to the node version to use (supports 8.x, 10.x, 12.x)
 
 jobs:
@@ -39,15 +39,15 @@ jobs:
         with:
           node-version: ${{ env.NODE_VERSION }}
 
-      # TODO: use Yarn action
-      - name: 'Resolve Project Dependencies Using Npm'
-        shell: bash
-        run: |
-          pushd './${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}'
-          npm install
-          npm run build --if-present
-          npm run test --if-present
-          popd
+      # # TODO: use Yarn action
+      # - name: 'Resolve Project Dependencies Using Npm'
+      #   shell: bash
+      #   run: |
+      #     pushd './${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}'
+      #     npm install
+      #     npm run build --if-present
+      #     npm run test --if-present
+      #     popd
 
       - uses: azure/login@v1
         with:
@@ -78,7 +78,7 @@ jobs:
         id: fa
         with:
           app-name: ${{ env.AZURE_FUNCTIONAPP_NAME }}
-          package: ${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}
+          # package: ${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}
 
       - name: 'print url'
         shell: bash
