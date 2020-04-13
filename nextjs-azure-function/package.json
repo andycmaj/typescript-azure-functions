@@ -1,0 +1,23 @@
+{
+  "name": "nextjs-azure-function",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "dev": "NODE_OPTIONS='--inspect' next",
+    "build": "next build",
+    "start": "next start"
+  },
+  "dependencies": {
+    "next": "^9.3.4",
+    "patch-module": "^0.1.0",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1"
+  },
+  "devDependencies": {
+    "@types/node": "^13.11.1",
+    "@types/react": "^16.9.34",
+    "jetzt": "0.0.7",
+    "typescript": "^3.8.3"
+  }
+}

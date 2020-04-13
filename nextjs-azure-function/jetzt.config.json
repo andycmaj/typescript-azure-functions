@@ -1,0 +1,11 @@
+{
+    "functionApp": {
+        "subscriptionId": "006d329c-a6e1-4a03-bd92-1123630cda9a",
+        "resourceGroup": "andyc-rg",
+        "location": "westus",
+        "name": "ac-next-1"
+    },
+    "storage": {
+        "account": "andycsa"
+    }
+}
