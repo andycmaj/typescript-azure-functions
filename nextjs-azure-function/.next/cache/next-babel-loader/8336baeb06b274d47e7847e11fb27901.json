@@ -1,0 +1,1 @@
+{"ast":null,"code":"export default ((_, res) => {\n  try {\n    res.status(200).json({\n      value: 'hello'\n    });\n  } catch (err) {\n    res.status(500).json({\n      statusCode: 500,\n      message: err.message\n    });\n  }\n});","map":null,"metadata":{},"sourceType":"module"}
